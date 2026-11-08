@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>local-test-runner Mocha 示例</title>
+	<link rel="stylesheet" href="./mocha.css?v=1.16.0">
+</head>
+<body>
+	<div id="mocha"></div>
+	<script src="./mocha.js?v=1.16.0"></script>
+	<script>
+	mocha.setup('bdd');
+
+	describe('基础断言', function() {
+		it('同步断言', function() {
+			if (1 + 1 !== 2) {
+				throw new Error('1 + 1 应等于 2');
+			}
+			if ('a'.toUpperCase() !== 'A') {
+				throw new Error('toUpperCase 失败');
+			}
+		});
+	});
+
+	describe('数组', function() {
+		it('map 结果', function() {
+			var actual = [1, 2, 3].map(function(x) { return x * 2; });
+			var expected = [2, 4, 6];
+			if (actual.join(',') !== expected.join(',')) {
+				throw new Error('期望 ' + expected.join(',') + '，实际 ' + actual.join(','));
+			}
+		});
+	});
+
+	describe('异步', function() {
+		it('setTimeout 回调', function(done) {
+			setTimeout(function() {
+				done();
+			}, 50);
+		});
+	});
+
+	// 取消注释可演示失败明细上报：
+	// it('失败示例', function() {
+	// 	throw new Error('应该失败');
+	// });
+
+	// 放到 onload 里执行，保证插件注入的 Runner 劫持脚本已经生效。
+	window.onload = function() {
+		mocha.run();
+	};
+	</script>
+</body>
+</html>

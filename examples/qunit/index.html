@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>local-test-runner QUnit 示例</title>
+	<link rel="stylesheet" href="./qunit.css?v=1.9.0">
+</head>
+<body>
+	<div id="qunit"></div>
+	<div id="qunit-fixture"></div>
+	<script src="./qunit.js?v=1.9.0"></script>
+	<script>
+	// QUnit 1.9 的 QUnit.module 只接受模块名和环境对象，
+	// 与 2.x 的 QUnit.module(name, callback) 不同，所以测试要逐个注册
+	QUnit.module('基础断言');
+	QUnit.test('同步断言', function(assert) {
+		assert.ok(true, 'ok');
+		assert.equal(1 + 1, 2, 'equal');
+		assert.strictEqual('a'.toUpperCase(), 'A', 'strictEqual');
+	});
+
+	QUnit.asyncTest('异步断言', function(assert) {
+		setTimeout(function() {
+			assert.ok(true, '异步回调中通过');
+			QUnit.start();
+		}, 50);
+	});
+
+	QUnit.module('数组');
+	QUnit.test('深比较', function(assert) {
+		assert.deepEqual([1, 2, 3].map(function(x) { return x * 2; }), [2, 4, 6], 'map 结果');
+	});
+
+	// 取消注释可演示失败明细上报：
+	// QUnit.test('失败示例', function(assert) {
+	// 	assert.equal(1, 2, '应该失败');
+	// });
+
+	// 老 Presto Opera 不执行服务器注入的上报脚本，这里兜底：结果 POST 回服务器。
+	// 现代浏览器上，注入脚本随后会把 QUnit.done 覆盖成它自己的版本，这里自然失效。
+	if (typeof QUnit.version === 'undefined') {
+		QUnit.done = function(result) {
+			setTimeout(function() {
+				var form = document.createElement('form');
+				form.method = 'POST';
+				form.action = '/';
+				form.style.display = 'none';
+				function add(name, value) {
+					var input = document.createElement('input');
+					input.name = name;
+					input.value = value;
+					form.appendChild(input);
+				}
+				add('total', result.total);
+				add('passed', result.passed);
+				add('runtime', result.runtime);
+				add('failures', result.failed);
+				document.body.appendChild(form);
+				form.submit();
+			}, 500);
+		};
+	}
+	</script>
+</body>
+</html>
