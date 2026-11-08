@@ -1,0 +1,14 @@
+{
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": "explicit"
+	},
+	"editor.formatOnSave": true,
+	"editor.insertSpaces": false,
+	"editor.renderWhitespace": "boundary",
+	"javascript.format.semicolons": "insert",
+	"typescript.format.semicolons": "insert",
+	"typescript.preferences.preferTypeOnlyAutoImports": true,
+	"files.insertFinalNewline": false,
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"js/ts.tsdk.path": "node_modules/typescript/lib"
+}

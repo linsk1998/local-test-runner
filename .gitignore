@@ -15,6 +15,7 @@ yarn-debug.log*
 # 运行时数据
 .cache/
 .temp/
+.screenshots/
 tmp/
 
 # npm 打包产物
@@ -22,7 +23,6 @@ tmp/
 
 # 编辑器
 .idea/
-.vscode/
 *.suo
 *.swp
 
