@@ -13,11 +13,6 @@
 	"files": [
 		"dist"
 	],
-	"scripts": {
-		"build": "rollup -c",
-		"watch": "rollup -c -w",
-		"prepublishOnly": "pnpm build"
-	},
 	"keywords": [
 		"test-runner",
 		"browser-testing",
@@ -41,6 +36,12 @@
 	"sideEffects": false,
 	"engines": {
 		"node": ">=16"
+	},
+	"scripts": {
+		"build": "rollup -c",
+		"watch": "rollup -c -w",
+		"prepublishOnly": "pnpm build",
+		"publish:npm": "npm publish --registry=https://registry.npmjs.org"
 	},
 	"packageManager": "pnpm@10.32.1",
 	"dependencies": {
